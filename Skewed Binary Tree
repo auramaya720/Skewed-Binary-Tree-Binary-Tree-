@@ -1,0 +1,66 @@
+#include <iostream>
+using namespace std;
+
+// Struktur node untuk Binary Tree
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int value) {
+        data = value;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+
+// ====== LEFT SKEWED TREE (semua node ke kiri) ======
+Node* insertLeftSkewed(Node* root, int value) {
+    if (root == nullptr) {
+        return new Node(value);
+    }
+    root->left = insertLeftSkewed(root->left, value);
+    return root;
+}
+
+// ====== RIGHT SKEWED TREE (semua node ke kanan) ======
+Node* insertRightSkewed(Node* root, int value) {
+    if (root == nullptr) {
+        return new Node(value);
+    }
+    root->right = insertRightSkewed(root->right, value);
+    return root;
+}
+
+// Traversal untuk menampilkan node (inorder)
+void inorder(Node* root) {
+    if (root == nullptr) return;
+    inorder(root->left);
+    cout << root->data << " ";
+    inorder(root->right);
+}
+
+int main() {
+    Node* leftSkewedTree = nullptr;
+    Node* rightSkewedTree = nullptr;
+
+    // Membuat LEFT SKEWED TREE
+    leftSkewedTree = insertLeftSkewed(leftSkewedTree, 10);
+    leftSkewedTree = insertLeftSkewed(leftSkewedTree, 20);
+    leftSkewedTree = insertLeftSkewed(leftSkewedTree, 30);
+
+    // Membuat RIGHT SKEWED TREE
+    rightSkewedTree = insertRightSkewed(rightSkewedTree, 10);
+    rightSkewedTree = insertRightSkewed(rightSkewedTree, 20);
+    rightSkewedTree = insertRightSkewed(rightSkewedTree, 30);
+
+    cout << "Left Skewed Tree (Inorder Traversal): ";
+    inorder(leftSkewedTree);
+    cout << endl;
+
+    cout << "Right Skewed Tree (Inorder Traversal): ";
+    inorder(rightSkewedTree);
+    cout << endl;
+
+    return 0;
+}
